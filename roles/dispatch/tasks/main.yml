@@ -1,0 +1,27 @@
+- name: Install golang
+  ansible.builtin.dnf:
+    name: golang
+    state: installed
+
+- name: load app prerequisite
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: app_prerequisites
+
+- name: load SystemD setup
+  ansible.builtin.include_role:
+    name: common
+    tasks_from: systemd_setup
+
+- name: build golang software
+  ansible.builtin.shell: go mod init dispatch ; go get ; go build
+  args:
+    chdir: /app
+
+- name: restart dispatch service
+  ansible.builtin.systemd_service:
+    name: dispatch
+    state: restarted
+
+# once installed, logon to dispatch server and check /var/log/messages to verify if the order status
+# systemctl status dispatch : tail -f /var/log/messages
