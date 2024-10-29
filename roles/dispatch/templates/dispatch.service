@@ -2,7 +2,7 @@
 Description = Dispatch Service
 [Service]
 User=roboshop
-Environment=AMQP_HOST={{ app_name }}-{{ env }}.hptldevops.online
+Environment=AMQP_HOST={{ component }}-{{ env }}.hptldevops.online
 Environment=AMQP_USER=roboshop
 Environment=AMQP_PASS=roboshop123
 ExecStart=/app/dispatch
