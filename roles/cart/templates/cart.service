@@ -2,8 +2,8 @@
 Description = Cart Service
 [Service]
 User=roboshop
-Environment=REDIS_HOST=redis-{{ env }}.hptldevops.online
-Environment=CATALOGUE_HOST=catalogue-{{ env }}.hptldevops.online
+Environment=REDIS_HOST={{ lookup('hashi_vault', 'roboshop-{{env}}/data/cart:REDIS_HOST token={{ vault_token }} url=http://vault-internal.hptldevops.online:8200')}}
+Environment=CATALOGUE_HOST={{ lookup('hashi_vault', 'roboshop-{{env}}/data/cart:CATALOGUE_HOST token={{ vault_token }} url=http://vault-internal.hptldevops.online:8200')}}
 Environment=CATALOGUE_PORT=8080
 ExecStart=/bin/node /app/server.js
 SyslogIdentifier=cart
