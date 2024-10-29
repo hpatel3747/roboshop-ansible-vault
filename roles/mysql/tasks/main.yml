@@ -10,7 +10,7 @@
     enabled: yes
 
 - name: Setup MySQL Password
-  ansible.builtin.shell: mysql_secure_installation --set-root-pass RoboShop@1
+  ansible.builtin.shell: mysql_secure_installation --set-root-pass {{ lookup('hashi_vault', 'roboshop-{{env}}/data/mysql:mysql_root_password token={{ vault_token }} url=http://vault-internal.hptldevops.online:8200')}}
   ## Password should not be hardcoded. We will change this.
 
 
